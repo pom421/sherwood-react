@@ -6,23 +6,43 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {
 	BrowserRouter as Router,
 	Route,
-	Link,
+    Link,
+    Redirect,
 	Switch
 } from 'react-router-dom'
 
+// récupération d'image à partir de la librairie Octicon de Github
 import ArrowLeft from 'react-icons/lib/go/arrow-left';
 
+// Jeux de données ----- 
 
 var COSTS = [
-	{ id: 1, date: "13/08/2017", amount: "27", reason:"Restaurant"},
-	{ id: 2, date: "04/08/2017", amount: "23", reason:"Docteur"},
-	{ id: 3, date: "01/07/2017", amount: "400", reason:"Hébergement Dordogne"}
+	{ costId: 1, date: "13/08/2017", amount: "27", reason:"Restaurant"},
+	{ costId: 2, date: "04/08/2017", amount: "23", reason:"Docteur"},
+	{ costId: 3, date: "01/07/2017", amount: "400", reason:"Hébergement Dordogne"}
 ]
 
-const getCost = id => {
-    const arr = COSTS.filter( c => c.id === +id)
+const getCost = costId => {
+    const arr = COSTS.filter( c => c.costId === +costId)
 
     return arr && arr[0] ? arr[0] : {}
+}
+
+const updateCost = cost => {
+
+    var copy = COSTS.slice()
+    for (var i = 0; i < copy.length; i++) {
+        if (copy[i].costId === cost.costId) {
+            copy[i] = cost
+            break
+        }
+    }
+    COSTS = copy
+}
+
+const addCost = cost => {
+    COSTS.push(cost)
+    return getCost(cost.costId)
 }
 
 class App extends Component {
@@ -66,15 +86,12 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" render={() => <IndexPage costs={ this.state.costs } />} />
                         <Route exact path="/detail" component={ DetailPage }></Route>
-                        <Route path="/detail/:id" component={ DetailPage }></Route>
+                        <Route path="/detail/:costId" component={ DetailPage }></Route>
                     </Switch>
                     
                     
                 </Router>
-                
-                {/*
-                <span>Dernière tâche { this.state && this.state.costs[0] && JSON.stringify(this.state.costs[0]) }</span>
-                */}
+            
             </div>
         )
 	}
@@ -103,7 +120,7 @@ class DetailPage extends Component {
 				<Banner></Banner>
                 <Link to="/">
                 <ArrowLeft size="30"/> Retour</Link>
-				<DetailCost costId={ this.props.match.params.id }></DetailCost>
+				<DetailCost costId={ this.props.match.params.costId }></DetailCost>
 			</div>
 
 		)
@@ -115,22 +132,62 @@ class DetailCost extends Component {
     constructor(props) {
         super(props)
 
+        let cost = getCost(this.props.costId)
+        
+        this.state = {
+            costId: cost.costId,
+            date: cost.date,
+            amount: cost.amount,
+            reason: cost.reason
+        }
+        
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleInputChange = this.handleInputChange.bind(this)
+
+        this.redirection = false
     }
 
     handleSubmit(event) {
 
         event.preventDefault()
 
-        const data = new FormData(event.target)
+        // TODO : contrôle
 
-        console.log("JSON.stringify", JSON.stringify(data))
+        // mise à jour ou ajout
+        if (this.state.costId) {
+            updateCost(this.state)
+            
+        } else {
+            addCost(this.state)
 
+        }
+
+        this.redirection = true
+
+        
     }
-
+    
+    handleInputChange(event) {
+        const value = event.target.value
+        const name = event.target.name
+        
+        console.log("change détecté", name, value)
+        
+        this.setState({
+            [name]: value
+        })
+    }
+    
     render() {
 
-        let cost = getCost(this.props.costId)
+        if (this.redirection) {
+            return (
+                <div>
+                    <span>Dans le redirect</span>
+                    <Redirect to="/"/>
+                </div>
+            )
+        }
 
         return (
             <div>
@@ -139,21 +196,26 @@ class DetailCost extends Component {
                 <form onSubmit={ this.handleSubmit }>
                     <div className="form-group">
                         <label htmlFor="id">Id</label>
-                        <input name="id" id="id" className="form-control" disabled value={ cost.id } />
+                        <input name="id" id="id" className="form-control" disabled value={ this.state.costId } />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="date">Date</label>
-                        <input name="date" id="date" className="form-control" value={ cost.date }></input>
+                        <input name="date" id="date" className="form-control" value={ this.state.date } onChange={ this.handleInputChange }></input>
                         {/*<input name="date" id="date" type="date" className="form-control" defaultValue="12-24-1983" />*/}
                     </div>
                     
                     <div className="form-group">
                         <label htmlFor="amount">Montant</label>
-                        <input name="amount" id="amount" className="form-control" value={ cost.amount }></input>
+                        <input name="amount" id="amount" className="form-control" value={ this.state.amount } onChange={ this.handleInputChange }></input>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="reason">Raison</label>
+                        <input name="reason" id="reason" className="form-control" value={ this.state.reason } onChange={ this.handleInputChange }></input>
                     </div>
                                         
-                    <input type="submit" className="btn btn-primary btn-block" value="Ajouter" />
+                    <input type="submit" className="btn btn-primary btn-block" value={ this.state.costId ? "Modifier" : "Ajouter" } onChange={ this.handleInputChange } />
                 </form>
             </div>
         )
@@ -165,7 +227,7 @@ class Banner extends Component {
     render() {
         return (
             <div>
-                <h1>Sherwood</h1>
+                <h1 style={{ fontFamily: 'Lobster' }}>Sherwood</h1>
             </div>
         )
     }
@@ -206,9 +268,9 @@ class ListCostRows extends Component {
         var rows = this.props.costs
             .map(curr => {
                 return (
-                    <tr key={ curr.id }>
+                    <tr key={ curr.costId }>
                         <td>
-                            <Link to={ `/detail/${ curr.id }` }>
+                            <Link to={ `/detail/${ curr.costId }` }>
                             { curr.date } <span className="badge badge-secondary">{ curr.amount }€</span><br/>
                             { curr.reason }
                             </Link>
