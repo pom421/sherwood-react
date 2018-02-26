@@ -10,12 +10,20 @@ import {
 	Switch
 } from 'react-router-dom'
 
+import ArrowLeft from 'react-icons/lib/go/arrow-left';
+
 
 var COSTS = [
 	{ id: 1, date: "13/08/2017", amount: "27", reason:"Restaurant"},
 	{ id: 2, date: "04/08/2017", amount: "23", reason:"Docteur"},
 	{ id: 3, date: "01/07/2017", amount: "400", reason:"Hébergement Dordogne"}
 ]
+
+const getCost = id => {
+    const arr = COSTS.filter( c => c.id === +id)
+
+    return arr && arr[0] ? arr[0] : {}
+}
 
 class App extends Component {
 
@@ -57,7 +65,8 @@ class App extends Component {
                 <Router>
                     <Switch>
                         <Route exact path="/" render={() => <IndexPage costs={ this.state.costs } />} />
-                        <Route path="/detail" component={ DetailPage }></Route>
+                        <Route exact path="/detail" component={ DetailPage }></Route>
+                        <Route path="/detail/:id" component={ DetailPage }></Route>
                     </Switch>
                     
                     
@@ -78,7 +87,9 @@ class IndexPage extends Component {
 			<div>
                 <Banner></Banner>
 				<CostsUI costs={ this.props.costs }></CostsUI>
-				<Link to="/detail"><button type="button" className="btn btn-primary btn-block">Ajouter</button></Link>
+                <Link to="/detail">
+                    <button type="button" className="btn btn-primary btn-block">Ajouter</button>
+                </Link>
 			</div>
 		)
 	}
@@ -90,8 +101,9 @@ class DetailPage extends Component {
 		return (
 			<div>
 				<Banner></Banner>
-				<Link to="/">Retour</Link>
-				<DetailCost></DetailCost>
+                <Link to="/">
+                <ArrowLeft size="30"/> Retour</Link>
+				<DetailCost costId={ this.props.match.params.id }></DetailCost>
 			</div>
 
 		)
@@ -108,7 +120,6 @@ class DetailCost extends Component {
 
     handleSubmit(event) {
 
-        console.log("event", event)
         event.preventDefault()
 
         const data = new FormData(event.target)
@@ -118,27 +129,31 @@ class DetailCost extends Component {
     }
 
     render() {
+
+        let cost = getCost(this.props.costId)
+
         return (
             <div>
                 <h1>Page de détail</h1>
 
                 <form onSubmit={ this.handleSubmit }>
-                    <label name="id">Id</label>
-                    <span></span>
+                    <div className="form-group">
+                        <label htmlFor="id">Id</label>
+                        <input name="id" id="id" className="form-control" disabled value={ cost.id } />
+                    </div>
 
-                    <br/>
+                    <div className="form-group">
+                        <label htmlFor="date">Date</label>
+                        <input name="date" id="date" className="form-control" value={ cost.date }></input>
+                        {/*<input name="date" id="date" type="date" className="form-control" defaultValue="12-24-1983" />*/}
+                    </div>
                     
-                    <label htmlFor="date" name="date-label">Date</label>
-                    <input name="date" id="date"></input>
-                    
-                    <br/>
-                    
-                    <label htmlFor="amount" name="amount-label">amount</label>
-                    <input name="amount" id="amount"></input>
-                    
-                    <br/>
-                    
-                    <input type="submit"  className="btn btn-primary btn-block" value="Ajouter" />
+                    <div className="form-group">
+                        <label htmlFor="amount">Montant</label>
+                        <input name="amount" id="amount" className="form-control" value={ cost.amount }></input>
+                    </div>
+                                        
+                    <input type="submit" className="btn btn-primary btn-block" value="Ajouter" />
                 </form>
             </div>
         )
@@ -157,10 +172,6 @@ class Banner extends Component {
 }
 
 class CostsUI extends Component {
-
-    getCosts() {
-        return this.props && this.props.costs || []
-    }
 
     render() {
         return (
@@ -197,8 +208,10 @@ class ListCostRows extends Component {
                 return (
                     <tr key={ curr.id }>
                         <td>
+                            <Link to={ `/detail/${ curr.id }` }>
                             { curr.date } <span className="badge badge-secondary">{ curr.amount }€</span><br/>
                             { curr.reason }
+                            </Link>
                         </td>
                     </tr>
                 )
