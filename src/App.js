@@ -140,10 +140,12 @@ class DetailCost extends Component {
         // mise à jour ou ajout
         if (this.state.id) {
             updateCost(this.state)
+            .catch(error => console.error(`Erreur lors de la mise à jour du frais avec l'id ${ this.state.id }`))
             
         } else {
             addCost(this.state)
-
+            .catch(error => console.error(`Erreur lors de l'ajout du frais`))
+            
         }
 
         this.redirection = true

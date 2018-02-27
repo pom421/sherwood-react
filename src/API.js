@@ -1,7 +1,5 @@
 const URL = "http://localhost:3000/costs"
 
-let COSTS = []
-
 const getCosts = () => {
   return fetch(URL, {
     method: "GET"
@@ -19,20 +17,31 @@ const getCost = id => {
 
 const updateCost = cost => {
 
-  var copy = COSTS.slice()
-  for (var i = 0; i < copy.length; i++) {
-      if (copy[i].id === cost.id) {
-          copy[i] = cost
-          break
-      }
-  }
-  COSTS = copy
+  const formData = new FormData();
+  formData.append('date', cost.date);
+  formData.append('amount', cost.amount);
+  formData.append('reason', cost.reason);
+
+  return fetch(URL + "/" + cost.id, {
+      method: 'PUT',
+      body: formData
+  })
+  .then(response => response.json())
+
 }
 
 const addCost = cost => {
-  cost.id = COSTS.length >= 1 ? COSTS[COSTS.length - 1].id + 1 : 1
-  COSTS.push(cost)
-  return getCost(cost.id)
+  const formData = new FormData();
+  formData.append('date', cost.date);
+  formData.append('amount', cost.amount);
+  formData.append('reason', cost.reason);
+
+  return fetch(URL, {
+      method: 'POST',
+      body: formData
+  })
+  .then(response => response.json())
+
 }
 
 console.log("CHARGEMENT XXX")
