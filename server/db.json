@@ -1,0 +1,28 @@
+{
+  "costs": [
+    {
+      "id": 1,
+      "date": "13/08/2017",
+      "amount": "27",
+      "reason": "Restaurant"
+    },
+    {
+      "id": 2,
+      "date": "04/08/2017",
+      "amount": "23",
+      "reason": "Cordonnier M. Dupont (modifié)"
+    },
+    {
+      "id": 3,
+      "date": "01/07/2017",
+      "amount": "400",
+      "reason": "Hébergement mariage Dordogne (modifié)"
+    },
+    {
+      "date": "28/02/2018",
+      "amount": 19,
+      "reason": "Cordonnier",
+      "id": 4
+    }
+  ]
+}
