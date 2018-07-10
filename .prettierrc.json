@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "plugin:prettier/recommended"
+  ],
+  "printWidth": 100,
+  "parser": "babylon",
+  "semi": false,
+  "tabWidth": 3
+}

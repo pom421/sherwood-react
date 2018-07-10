@@ -1,7 +1,8 @@
 ## Pour lancer le serveur d'API REST :
 
 ```js
-npm run api
+yarn global add json-server
+yarn run api
 ```
 
 ## Exemples d'appels
