@@ -6,19 +6,17 @@ export default class ListCostRows extends Component {
       const { costs } = this.props
 
       if (costs) {
-         var rows = this.props.costs.map(curr => {
-            return (
-               <tr key={curr.id}>
-                  <td>
-                     <Link to={`/detail/${curr.id}`}>
-                        {curr.date} <span className="badge badge-secondary">{curr.amount}€</span>
-                        <br />
-                        {curr.reason}
-                     </Link>
-                  </td>
-               </tr>
-            )
-         })
+         var rows = this.props.costs.map(curr => (
+            <tr key={curr.id}>
+               <td>
+                  <Link to={`/detail/${curr.id}`}>
+                     {curr.date} <span className="badge badge-secondary">{curr.amount}€</span>
+                     <br />
+                     {curr.reason}
+                  </Link>
+               </td>
+            </tr>
+         ))
       }
 
       return (

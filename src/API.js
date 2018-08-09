@@ -31,7 +31,7 @@ const addCost = cost => {
 const deleteCost = id => {
    return fetch(`${URL}/${id}`, {
       method: "DELETE"
-   })
+   }).then(res => res.json())
 }
 
 export { getAllCosts, getCost, updateCost, addCost, deleteCost }

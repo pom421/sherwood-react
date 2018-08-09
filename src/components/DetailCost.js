@@ -6,6 +6,8 @@ export default class DetailCost extends Component {
    constructor(props) {
       super(props)
 
+      console.log("DetailCost constructor")
+
       this.state = {
          id: props.id,
          date: props.date,
@@ -20,6 +22,7 @@ export default class DetailCost extends Component {
    }
 
    componentDidMount() {
+      console.log("DetailCost mounted")
       if (this.props.id) {
          getCost(this.props.id)
             .then(json => {
@@ -45,9 +48,7 @@ export default class DetailCost extends Component {
       }
    }
 
-   onSubmit(event) {
-      event.preventDefault()
-
+   onSubmit() {
       // TODO : contrôle
 
       if (this.state.id) {
@@ -110,66 +111,64 @@ export default class DetailCost extends Component {
          <div>
             <h1>Page de détail</h1>
 
-            <form onSubmit={this.onSubmit}>
-               <div className="form-group">
-                  <label htmlFor="id">Id</label>
-                  <input
-                     type="number"
-                     name="id"
-                     id="id"
-                     className="form-control"
-                     disabled
-                     value={this.state.id}
-                     onChange={this.onChange}
-                  />
-               </div>
+            <div className="form-group">
+               <label htmlFor="id">Id</label>
+               <input
+                  type="number"
+                  name="id"
+                  id="id"
+                  className="form-control"
+                  disabled
+                  value={this.state.id}
+                  onChange={this.onChange}
+               />
+            </div>
 
-               <div className="form-group">
-                  <label htmlFor="date">Date</label>
-                  <input
-                     type="date"
-                     name="date"
-                     id="date"
-                     className="form-control"
-                     value={this.state.date}
-                     onChange={this.onChange}
-                  />
-               </div>
+            <div className="form-group">
+               <label htmlFor="date">Date</label>
+               <input
+                  type="date"
+                  name="date"
+                  id="date"
+                  className="form-control"
+                  value={this.state.date}
+                  onChange={this.onChange}
+               />
+            </div>
 
-               <div className="form-group">
-                  <label htmlFor="amount">Montant</label>
-                  <input
-                     type="number"
-                     name="amount"
-                     id="amount"
-                     className="form-control"
-                     value={this.state.amount}
-                     onChange={this.onChange}
-                  />
-               </div>
+            <div className="form-group">
+               <label htmlFor="amount">Montant</label>
+               <input
+                  type="number"
+                  name="amount"
+                  id="amount"
+                  className="form-control"
+                  value={this.state.amount}
+                  onChange={this.onChange}
+               />
+            </div>
 
-               <div className="form-group">
-                  <label htmlFor="reason">Raison</label>
-                  <input
-                     type="text"
-                     name="reason"
-                     id="reason"
-                     className="form-control"
-                     value={this.state.reason}
-                     onChange={this.onChange}
-                  />
-               </div>
+            <div className="form-group">
+               <label htmlFor="reason">Raison</label>
+               <input
+                  type="text"
+                  name="reason"
+                  id="reason"
+                  className="form-control"
+                  value={this.state.reason}
+                  onChange={this.onChange}
+               />
+            </div>
 
-               <button className="btn btn-primary btn-block" onClick={this.onSubmit}>
-                  {this.state.id ? "Modifier" : "Ajouter"}
+            <button className="btn btn-primary btn-block" onClick={this.onSubmit}>
+               {this.state.id ? "Modifier" : "Ajouter"}
+            </button>
+
+            {this.state.id && (
+               <button className="btn btn-danger btn-block" onClick={this.onDelete}>
+                  Supprimer
                </button>
-
-               {this.state.id && (
-                  <button className="btn btn-danger btn-block" onClick={this.onDelete}>
-                     Supprimer
-                  </button>
-               )}
-            </form>
+            )}
          </div>
       )
    }
