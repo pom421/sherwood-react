@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { getCost, updateCost, addCost } from "../API"
+import { getCost, updateCost, addCost, deleteCost } from "../API"
 import { Redirect } from "react-router-dom"
 
 export default class DetailCost extends Component {
@@ -7,32 +7,42 @@ export default class DetailCost extends Component {
       super(props)
 
       this.state = {
-         id: undefined,
-         date: undefined,
-         amount: undefined,
-         reason: undefined
+         id: props.id,
+         date: props.date,
+         amount: props.amount,
+         reason: props.reason,
+         redirect: false
       }
 
       this.onSubmit = this.onSubmit.bind(this)
       this.onChange = this.onChange.bind(this)
-
-      this.redirection = false
+      this.onDelete = this.onDelete.bind(this)
    }
 
    componentDidMount() {
-      getCost(this.props.id)
-         .then(res => res.json())
-         .catch(error =>
-            console.error(`Erreur lors du chargement du cost avec l'id ${this.props.id}`)
-         )
-         .then(response => {
-            this.setState({
-               id: response.id,
-               date: response.date,
-               amount: response.amount,
-               reason: response.reason
+      if (this.props.id) {
+         getCost(this.props.id)
+            .then(json => {
+               this.setState(
+                  {
+                     id: json.id,
+                     date: json.date,
+                     amount: json.amount,
+                     reason: json.reason
+                  },
+                  () =>
+                     console.log(
+                        "Récupération du JSON et chargement du state OK",
+                        JSON.stringify(this.state)
+                     )
+               )
             })
-         })
+            .catch(error =>
+               console.error(
+                  `Erreur lors du chargement du cost avec l'id ${this.props.id} (${error})`
+               )
+            )
+      }
    }
 
    onSubmit(event) {
@@ -40,16 +50,44 @@ export default class DetailCost extends Component {
 
       // TODO : contrôle
 
-      // mise à jour ou ajout
       if (this.state.id) {
-         updateCost(this.state).catch(error =>
-            console.error(`Erreur lors de la mise à jour du frais avec l'id ${this.state.id}`)
-         )
+         // mise à jour
+         updateCost(this.state)
+            .then(data => {
+               console.log("Fetch ok", data)
+               this.setState({
+                  redirection: true
+               })
+            })
+            .catch(error =>
+               console.error(
+                  `Erreur lors de la mise à jour du frais avec l'id ${this.state.id} (${error})`
+               )
+            )
       } else {
-         addCost(this.state).catch(error => console.error(`Erreur lors de l'ajout du frais`))
+         // ajout
+         addCost(this.state)
+            .then(data => {
+               console.log("ajout dépense OK", data)
+               this.setState({
+                  redirection: true
+               })
+            })
+            .catch(error => console.error(`Erreur lors de l'ajout de la dépense (${error})`))
       }
+   }
 
-      this.redirection = true
+   onDelete() {
+      deleteCost(this.state.id)
+         .then(() => {
+            console.log("Suppression du cost")
+            this.setState({
+               redirection: true
+            })
+         })
+         .catch(err => {
+            console.log("Erreur lors de la suppression de l'item ", this.state.id)
+         })
    }
 
    onChange(event) {
@@ -64,7 +102,7 @@ export default class DetailCost extends Component {
    }
 
    render() {
-      if (this.redirection) {
+      if (this.state.redirection) {
          return <Redirect to="/" />
       }
 
@@ -76,17 +114,20 @@ export default class DetailCost extends Component {
                <div className="form-group">
                   <label htmlFor="id">Id</label>
                   <input
+                     type="number"
                      name="id"
                      id="id"
                      className="form-control"
                      disabled
                      value={this.state.id}
+                     onChange={this.onChange}
                   />
                </div>
 
                <div className="form-group">
                   <label htmlFor="date">Date</label>
                   <input
+                     type="date"
                      name="date"
                      id="date"
                      className="form-control"
@@ -98,6 +139,7 @@ export default class DetailCost extends Component {
                <div className="form-group">
                   <label htmlFor="amount">Montant</label>
                   <input
+                     type="number"
                      name="amount"
                      id="amount"
                      className="form-control"
@@ -109,6 +151,7 @@ export default class DetailCost extends Component {
                <div className="form-group">
                   <label htmlFor="reason">Raison</label>
                   <input
+                     type="text"
                      name="reason"
                      id="reason"
                      className="form-control"
@@ -117,12 +160,15 @@ export default class DetailCost extends Component {
                   />
                </div>
 
-               <input
-                  type="submit"
-                  className="btn btn-primary btn-block"
-                  value={this.state.id ? "Modifier" : "Ajouter"}
-                  onChange={this.onChange}
-               />
+               <button className="btn btn-primary btn-block" onClick={this.onSubmit}>
+                  {this.state.id ? "Modifier" : "Ajouter"}
+               </button>
+
+               {this.state.id && (
+                  <button className="btn btn-danger btn-block" onClick={this.onDelete}>
+                     Supprimer
+                  </button>
+               )}
             </form>
          </div>
       )

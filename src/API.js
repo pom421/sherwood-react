@@ -1,43 +1,37 @@
 const URL = "http://localhost:3001/costs"
 
-const getCosts = () => {
+const getAllCosts = () => {
    return fetch(URL, {
       method: "GET"
-   })
+   }).then(res => res.json())
 }
 
 const getCost = id => {
-   //const arr = COSTS.filter( c => c.id === +id)
-
    return fetch(URL + "/" + id, {
       method: "GET"
-   })
+   }).then(res => res.json())
 }
 
 const updateCost = cost => {
-   const formData = new FormData()
-   formData.append("date", cost.date)
-   formData.append("amount", cost.amount)
-   formData.append("reason", cost.reason)
-
-   return fetch(URL + "/" + cost.id, {
+   return fetch(`${URL}/${cost.id}`, {
       method: "PUT",
-      body: formData
-   }).then(response => response.json())
+      body: JSON.stringify(cost),
+      headers: { "Content-type": "application/json" }
+   }).then(res => res.json())
 }
 
 const addCost = cost => {
-   const formData = new FormData()
-   formData.append("date", cost.date)
-   formData.append("amount", cost.amount)
-   formData.append("reason", cost.reason)
-
    return fetch(URL, {
       method: "POST",
-      body: formData
-   }).then(response => response.json())
+      body: JSON.stringify(cost),
+      headers: { "Content-Type": "application/json" }
+   }).then(res => res.json())
 }
 
-console.log("CHARGEMENT XXX")
+const deleteCost = id => {
+   return fetch(`${URL}/${id}`, {
+      method: "DELETE"
+   })
+}
 
-export { getCosts, getCost, updateCost, addCost }
+export { getAllCosts, getCost, updateCost, addCost, deleteCost }
