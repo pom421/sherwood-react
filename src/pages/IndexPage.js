@@ -35,11 +35,13 @@ export default class IndexPage extends Component {
             <Banner />
             <MonthlyCostsSummary costs={this.state.costs} />
             <ListCostRows costs={this.state.costs} />
-            <Link to="/detail">
-               <button type="button" className="btn btn-primary mx-2">
-                  Ajouter
-               </button>
-            </Link>
+            <div style={{textAlign: "center"}}>
+              <Link to="/detail">
+                <button type="button" className="btn btn-primary btn-lg">
+                    Ajouter
+                </button>
+              </Link>
+            </div>
          </div>
       )
    }

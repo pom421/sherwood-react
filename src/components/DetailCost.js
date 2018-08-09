@@ -7,12 +7,14 @@ export default class DetailCost extends Component {
       super(props)
 
       console.log("DetailCost constructor")
-
+      
+      // initialisation à "". Ne pas initialiser à null ou undefined, au risque que React croit que les composants sont non contrôlés
+      // alors qu'ils le deviennent avec componentDidMount (cf https://reactjs.org/docs/forms.html#controlled-components + https://github.com/twisty/formsy-react-components/issues/66)
       this.state = {
          id: props.id,
-         date: props.date,
-         amount: props.amount,
-         reason: props.reason,
+         date: "",
+         amount: "",
+         reason: "",
          redirect: false
       }
 
@@ -26,6 +28,7 @@ export default class DetailCost extends Component {
       if (this.props.id) {
          getCost(this.props.id)
             .then(json => {
+               console.log("json trouvé ", json)
                this.setState(
                   {
                      id: json.id,
@@ -79,16 +82,20 @@ export default class DetailCost extends Component {
    }
 
    onDelete() {
-      deleteCost(this.state.id)
-         .then(() => {
-            console.log("Suppression du cost")
-            this.setState({
-               redirection: true
+      const res = window.confirm("Voulez-vous vraiment supprimer ce frais?")
+
+      if (res) {
+         deleteCost(this.state.id)
+            .then(() => {
+               console.log("Suppression du cost")
+               this.setState({
+                  redirection: true
+               })
             })
-         })
-         .catch(err => {
-            console.log("Erreur lors de la suppression de l'item ", this.state.id)
-         })
+            .catch(err => {
+               console.log("Erreur lors de la suppression de l'item ", this.state.id)
+            })
+      }
    }
 
    onChange(event) {
