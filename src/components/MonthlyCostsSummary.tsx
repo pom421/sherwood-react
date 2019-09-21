@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Cost } from "../Models"
+import { Cost } from "Models"
 
 interface Props {
    costs: Array<Cost>

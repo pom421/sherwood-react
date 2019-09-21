@@ -3,8 +3,8 @@ import { Link } from "react-router-dom"
 import { GoChevronLeft } from "react-icons/go"
 import { RouteProps } from 'react-router';
 
-import Banner from "../components/Banner"
-import DetailCost from "../components/DetailCost"
+import Banner from "components/Banner"
+import DetailCost from "components/DetailCost"
 
 export default class DetailPage extends Component<any & RouteProps, any>{
    render() {

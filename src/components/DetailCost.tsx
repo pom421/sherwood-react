@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
-import { getCost, updateCost, addCost, deleteCost } from "../API"
-import { Cost } from "../Models"
+import { getCost, updateCost, addCost, deleteCost } from "API"
+import { Cost } from "Models"
 
 interface Props {
    id: number

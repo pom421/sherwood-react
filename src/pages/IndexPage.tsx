@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
-import Banner from "../components/Banner"
-import MonthlyCostsSummary from "../components/MonthlyCostsSummary"
-import ListCostRows from "../components/ListCostRows"
-import { getAllCosts } from "../API"
-import { Cost } from "../Models"
+import Banner from "components/Banner"
+import MonthlyCostsSummary from "components/MonthlyCostsSummary"
+import ListCostRows from "components/ListCostRows"
+import { getAllCosts } from "API"
+import { Cost } from "Models"
 
 interface State {
    costs: Array<Cost>
@@ -15,7 +15,7 @@ export default class IndexPage extends Component<any, State> {
       super(props)
 
       this.state = {
-         costs: [] as Cost[]
+         costs: [] as Array<Cost>
       }
    }
 
