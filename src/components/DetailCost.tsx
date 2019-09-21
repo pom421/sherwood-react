@@ -1,13 +1,18 @@
 import React, { Component } from "react"
-import { getCost, updateCost, addCost, deleteCost } from "../API"
 import { Redirect } from "react-router-dom"
+import { getCost, updateCost, addCost, deleteCost } from "../API"
+import { Cost } from "../Models"
 
-export default class DetailCost extends Component {
+interface Props {
+   id: number
+}
+
+export default class DetailCost extends Component<Props, Cost> {
    constructor(props) {
       super(props)
 
       console.log("DetailCost constructor")
-      
+
       // initialisation à "". Ne pas initialiser à null ou undefined, au risque que React croit que les composants sont non contrôlés
       // alors qu'ils le deviennent avec componentDidMount (cf https://reactjs.org/docs/forms.html#controlled-components + https://github.com/twisty/formsy-react-components/issues/66)
       this.state = {
@@ -15,7 +20,7 @@ export default class DetailCost extends Component {
          date: "",
          amount: "",
          reason: "",
-         redirect: false
+         redirection: false
       }
 
       this.onSubmit = this.onSubmit.bind(this)
@@ -106,7 +111,7 @@ export default class DetailCost extends Component {
 
       this.setState({
          [name]: value
-      })
+      } as Pick<Cost, keyof Cost>)
    }
 
    render() {

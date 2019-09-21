@@ -6,13 +6,13 @@ const getAllCosts = () => {
    }).then(res => res.json())
 }
 
-const getCost = id => {
+const getCost = (id: number) => {
    return fetch(URL + "/" + id, {
       method: "GET"
    }).then(res => res.json())
 }
 
-const updateCost = cost => {
+const updateCost = (cost: any) => {
    return fetch(`${URL}/${cost.id}`, {
       method: "PUT",
       body: JSON.stringify(cost),

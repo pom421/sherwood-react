@@ -1,12 +1,12 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
-// récupération d'image à partir de la librairie Octicon de Github
 import { GoChevronLeft } from "react-icons/go"
+import { RouteProps } from 'react-router';
 
 import Banner from "../components/Banner"
 import DetailCost from "../components/DetailCost"
 
-export default class DetailPage extends Component {
+export default class DetailPage extends Component<any & RouteProps, any>{
    render() {
       return (
          <div>

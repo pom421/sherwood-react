@@ -1,16 +1,21 @@
 import React, { Component } from "react"
-import Banner from "../components/Banner"
 import { Link } from "react-router-dom"
+import Banner from "../components/Banner"
 import MonthlyCostsSummary from "../components/MonthlyCostsSummary"
 import ListCostRows from "../components/ListCostRows"
 import { getAllCosts } from "../API"
+import { Cost } from "../Models"
 
-export default class IndexPage extends Component {
+interface State {
+   costs: Array<Cost>
+}
+
+export default class IndexPage extends Component<any, State> {
    constructor(props) {
       super(props)
 
       this.state = {
-         costs: []
+         costs: [] as Cost[]
       }
    }
 

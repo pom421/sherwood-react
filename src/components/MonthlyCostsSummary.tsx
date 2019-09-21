@@ -1,6 +1,11 @@
 import React, { Component } from "react"
+import { Cost } from "../Models"
 
-export default class MonthlyCostsSummary extends Component {
+interface Props {
+   costs: Array<Cost>
+}
+
+export default class MonthlyCostsSummary extends Component<Props> {
    render() {
       const { costs } = this.props
 

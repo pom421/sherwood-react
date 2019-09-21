@@ -1,13 +1,18 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
+import { Cost } from "../Models"
 
-export default class ListCostRows extends Component {
+interface Props {
+   costs: Array<Cost>
+}
+
+export default class ListCostRows extends Component<Props> {
    render() {
       const { costs } = this.props
-
+      let rows
       if (costs) {
          const nbCosts = costs.length
-         var rows = this.props.costs.map((curr, index) => {
+         rows = this.props.costs.map((curr, index) => {
             let style = {
                display: "flex",
                justifyContent: "center",

@@ -39,15 +39,15 @@
       "id": 7,
       "date": "2018-08-07",
       "amount": "44",
-      "reason": "AZERTY",
-      "redirect": false
+      "reason": "AZERTYYY",
+      "redirection": false
     },
     {
       "id": 8,
       "date": "2019-09-19",
-      "amount": "25",
+      "amount": "30",
       "reason": "2 Pizzas",
-      "redirect": false
+      "redirection": false
     }
   ]
 }
