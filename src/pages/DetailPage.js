@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 // récupération d'image à partir de la librairie Octicon de Github
-import ArrowLeft from "react-icons/lib/go/arrow-left"
+import { GoChevronLeft } from "react-icons/go"
 
 import Banner from "../components/Banner"
 import DetailCost from "../components/DetailCost"
@@ -12,7 +12,7 @@ export default class DetailPage extends Component {
          <div>
             <Banner />
             <Link to="/">
-               <ArrowLeft size="30" /> Retour
+               <GoChevronLeft size="30" /> Retour
             </Link>
             <DetailCost id={this.props.match.params.id} />
          </div>

@@ -18,3 +18,17 @@ Les composants React sont encapsulés ainsi :
     - Banner                    : bannière (commune à toutes les pages du site)
     - DetailCost                : formulaire
 ```
+
+### URL
+
+- frontend : http://localhost:3000/
+- API : http://localhost:3001
+
+### How to run?
+
+```
+# on first console
+yarn api
+# on second console
+yarn start
+```

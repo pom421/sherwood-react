@@ -3,8 +3,8 @@
     {
       "id": 1,
       "date": "2017-08-13",
-      "amount": "27",
-      "reason": "Restaurant l'Ours",
+      "amount": "28",
+      "reason": "Restaurant l'Ours dont on n'a pas vendu la peau",
       "redirect": false
     },
     {
@@ -17,8 +17,9 @@
     {
       "id": 3,
       "date": "2017-05-23",
-      "amount": "400",
-      "reason": "Hébergement mariage Dordogne (modifié)"
+      "amount": "401",
+      "reason": "Hébergement mariage Dordogne (modifié)",
+      "redirect": false
     },
     {
       "date": "2018-08-09",
@@ -39,6 +40,13 @@
       "date": "2018-08-07",
       "amount": "44",
       "reason": "AZERTY",
+      "redirect": false
+    },
+    {
+      "id": 8,
+      "date": "2019-09-19",
+      "amount": "25",
+      "reason": "2 Pizzas",
       "redirect": false
     }
   ]
