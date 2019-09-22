@@ -3,6 +3,5 @@ export interface Cost {
   date: string,
   amount: string,
   reason: string,
-  redirection: boolean
 }
 

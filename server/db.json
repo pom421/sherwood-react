@@ -3,9 +3,8 @@
     {
       "id": 1,
       "date": "2017-08-13",
-      "amount": "28",
-      "reason": "Restaurant l'Ours dont on n'a pas vendu la peau",
-      "redirect": false
+      "amount": "29",
+      "reason": "Restaurant l'Ours dont on n'a pas vendu la peau"
     },
     {
       "id": 2,
@@ -36,18 +35,10 @@
       "id": 6
     },
     {
-      "id": 7,
-      "date": "2018-08-07",
-      "amount": "44",
-      "reason": "AZERTYYY",
-      "redirection": false
-    },
-    {
       "id": 8,
       "date": "2019-09-19",
-      "amount": "40",
-      "reason": "3 Pizzas",
-      "redirection": false
+      "amount": "50",
+      "reason": "4 Pizzas"
     }
   ]
 }
