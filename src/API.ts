@@ -1,3 +1,5 @@
+import { Cost } from "Models"
+
 const URL = "http://localhost:3001/costs"
 
 const getAllCosts = () => {
@@ -12,7 +14,7 @@ const getCost = (id: number) => {
    }).then(res => res.json())
 }
 
-const updateCost = (cost: any) => {
+const updateCost = (cost: Cost) => {
    return fetch(`${URL}/${cost.id}`, {
       method: "PUT",
       body: JSON.stringify(cost),
@@ -20,7 +22,7 @@ const updateCost = (cost: any) => {
    }).then(res => res.json())
 }
 
-const addCost = cost => {
+const addCost = (cost: Cost) => {
    return fetch(URL, {
       method: "POST",
       body: JSON.stringify(cost),
@@ -28,7 +30,7 @@ const addCost = cost => {
    }).then(res => res.json())
 }
 
-const deleteCost = id => {
+const deleteCost = (id: number) => {
    return fetch(`${URL}/${id}`, {
       method: "DELETE"
    }).then(res => res.json())

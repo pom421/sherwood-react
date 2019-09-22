@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default class DetailCost extends Component<Props, Cost> {
-   constructor(props) {
+   constructor(props: Props) {
       super(props)
 
       console.log("DetailCost constructor")
@@ -103,7 +103,7 @@ export default class DetailCost extends Component<Props, Cost> {
       }
    }
 
-   onChange(event) {
+   onChange(event: any) {
       const value = event.target.value
       const name = event.target.name
 
