@@ -15,7 +15,7 @@ const divStyle = {
    padding: "5px 0"
 }
 
-const ListCostRows: SFC<MyProps> = ({ costs }) => {
+export const ListCostRows: SFC<MyProps> = ({ costs }) => {
    let rows
 
    if (costs) {
@@ -45,5 +45,3 @@ const ListCostRows: SFC<MyProps> = ({ costs }) => {
       </div>
    )
 }
-
-export default ListCostRows

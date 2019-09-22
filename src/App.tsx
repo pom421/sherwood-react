@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
-import DetailPage from "pages/DetailPage"
-import IndexPage from "pages/IndexPage"
+import { DetailPage } from "pages/DetailPage"
+import { IndexPage } from "pages/IndexPage"
 
 //import logo from './img/logo.svg';
 import "css/App.css"

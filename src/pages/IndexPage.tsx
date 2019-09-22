@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 
-import Banner from "components/Banner"
-import MonthlyCostsSummary from "components/MonthlyCostsSummary"
-import ListCostRows from "components/ListCostRows"
+import { Banner } from "components/Banner"
+import { MonthlyCostsSummary } from "components/MonthlyCostsSummary"
+import { ListCostRows } from "components/ListCostRows"
 import { getAllCosts } from "API"
 
-const IndexPage = () => {
+export const IndexPage = () => {
 
    const [costs, setCosts ] = useState([])
 
@@ -34,5 +34,3 @@ const IndexPage = () => {
       </div>
    )
 }
-
-export default IndexPage

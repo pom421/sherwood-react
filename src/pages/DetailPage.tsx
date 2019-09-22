@@ -3,10 +3,10 @@ import { Link } from "react-router-dom"
 import { GoChevronLeft } from "react-icons/go"
 import { RouteProps } from 'react-router';
 
-import Banner from "components/Banner"
-import DetailCost from "components/DetailCost"
+import { Banner } from "components/Banner"
+import { DetailCost } from "components/DetailCost"
 
-const DetailPage: SFC<any & RouteProps> = ({ match }) => {
+export const DetailPage: SFC<any & RouteProps> = ({ match }) => {
    return (
       <div>
          <Banner />
@@ -17,5 +17,3 @@ const DetailPage: SFC<any & RouteProps> = ({ match }) => {
       </div>
    )
 }
-
-export default DetailPage

@@ -7,7 +7,7 @@ interface MyProps {
    id: number
 }
 
-const DetailCost: FC<MyProps> = ({ id }) => {
+export const DetailCost: FC<MyProps> = ({ id }) => {
 
    // initialisation à "". Ne pas initialiser à null ou undefined, au risque que React croit que les composants sont non contrôlés
    // alors qu'ils le deviennent avec componentDidMount (cf https://reactjs.org/docs/forms.html#controlled-components + https://github.com/twisty/formsy-react-components/issues/66)
@@ -157,5 +157,3 @@ const DetailCost: FC<MyProps> = ({ id }) => {
       </div>
    )
 }
-
-export default DetailCost

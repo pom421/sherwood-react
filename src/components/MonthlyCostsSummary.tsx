@@ -5,7 +5,7 @@ interface MyProps {
    costs: Array<Cost>
 }
 
-const MonthlyCostsSummary: SFC<MyProps> = ({ costs }) => {
+export const MonthlyCostsSummary: SFC<MyProps> = ({ costs }) => {
 
    var sum = !costs
       ? 0
@@ -19,5 +19,3 @@ const MonthlyCostsSummary: SFC<MyProps> = ({ costs }) => {
          </div>
    )
 }
-
-export default MonthlyCostsSummary
