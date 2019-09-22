@@ -3,15 +3,15 @@ import { Redirect } from "react-router-dom"
 import { getCost, updateCost, addCost, deleteCost } from "API"
 import { Cost } from "Models"
 
-interface Props {
+interface MyProps {
    id: number
 }
 
-export default class DetailCost extends Component<Props, Cost> {
-   constructor(props: Props) {
-      super(props)
+type MyState = Cost
 
-      console.log("DetailCost constructor")
+export default class DetailCost extends Component<MyProps, MyState> {
+   constructor(props: MyProps) {
+      super(props)
 
       // initialisation à "". Ne pas initialiser à null ou undefined, au risque que React croit que les composants sont non contrôlés
       // alors qu'ils le deviennent avec componentDidMount (cf https://reactjs.org/docs/forms.html#controlled-components + https://github.com/twisty/formsy-react-components/issues/66)
@@ -60,10 +60,8 @@ export default class DetailCost extends Component<Props, Cost> {
       // TODO : contrôle
 
       if (this.state.id) {
-         // mise à jour
          updateCost(this.state)
             .then(data => {
-               console.log("Fetch ok", data)
                this.setState({
                   redirection: true
                })
@@ -74,10 +72,8 @@ export default class DetailCost extends Component<Props, Cost> {
                )
             )
       } else {
-         // ajout
          addCost(this.state)
             .then(data => {
-               console.log("ajout dépense OK", data)
                this.setState({
                   redirection: true
                })
@@ -92,7 +88,6 @@ export default class DetailCost extends Component<Props, Cost> {
       if (res) {
          deleteCost(this.state.id)
             .then(() => {
-               console.log("Suppression du cost")
                this.setState({
                   redirection: true
                })
@@ -106,8 +101,6 @@ export default class DetailCost extends Component<Props, Cost> {
    onChange(event: any) {
       const value = event.target.value
       const name = event.target.name
-
-      console.log("change détecté", name, value)
 
       this.setState({
          [name]: value
