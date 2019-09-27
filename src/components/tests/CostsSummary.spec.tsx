@@ -18,4 +18,16 @@ describe("<CostsSummary />", () => {
          getByText("Total des frais: 0 €")
       })
    })
+
+   it("should sum the costs", () => {
+      const costs: Cost[] = [
+         { id: undefined, date: "", amount: 23, reason: "" },
+         { id: undefined, date: "", amount: 13, reason: "" },
+         { id: undefined, date: "", amount: 45, reason: "" },
+      ]
+
+      const { getByText } = render(<CostsSummary costs={costs} />)
+
+      getByText("Total des frais: 81 €")
+   })
 })

@@ -73,7 +73,7 @@ export const DetailCost: FC<MyProps> = ({ id }) => {
       const value = event.target.value
       const name = event.target.name
 
-      setState({ ...state, [name]: value } as Pick<Cost, keyof Cost>)
+      setState({ ...state, [name]: value })
    }
 
    if (redirection) {
