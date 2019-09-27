@@ -1,21 +1,29 @@
 {
-    "git.ignoreLimitWarning": true,
-    "window.zoomLevel": 0,
-    "editor.wordWrap": "on",
-    "workbench.colorTheme": "Lei Dark",
-    "material-icon-theme.showUpdateMessage": false,
-    "material-icon-theme.showWelcomeMessage": false,
-    "workbench.iconTheme": "material-icon-theme",
-    "typescript.check.npmIsInstalled": false,
-    "extensions.ignoreRecommendations": false,
-    "explorer.confirmDragAndDrop": false,
+  "eslint.autoFixOnSave": true,
+  "eslint.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "typescript",
+      "autoFix": true
+    },
+    {
+      "language": "typescriptreact",
+      "autoFix": true
+    }
+  ],
+  "editor.formatOnSave": true,
+  "[javascript]": {
     "editor.formatOnSave": false,
-    "git.ignoreMissingGitWarning": true,
-    "prettier.eslintIntegration": true,
-    "javascript.preferences.quoteStyle": "double",
-    "editor.tabSize": 2,
-    "javascript.format.enable": false,
-    "editor.fontFamily": "Cascadia Code, Fira Code, Menlo, Monaco, 'Courier New', monospace",
-    "editor.fontLigatures": true,
-    "editor.fontSize": 13,
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false,
+  },
+  "[typescript]": {
+    "editor.formatOnSave": false,
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": false,
+  },
 }

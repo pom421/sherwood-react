@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 
 import { Banner } from "components/Banner"
-import { MonthlyCostsSummary } from "components/MonthlyCostsSummary"
+import { CostsSummary } from "components/CostsSummary"
 import { ListCostRows } from "components/ListCostRows"
 import { getAllCosts } from "API"
+import { Cost } from "Models"
 
-export const IndexPage = () => {
-
-   const [costs, setCosts ] = useState([])
+export const IndexPage: React.FC = () => {
+   const [costs, setCosts] = useState<Array<Cost>>([])
 
    useEffect(() => {
       getAllCosts()
@@ -22,9 +22,9 @@ export const IndexPage = () => {
    return (
       <div>
          <Banner />
-         <MonthlyCostsSummary costs={ costs } />
-         <ListCostRows costs={ costs } />
-         <div style={{textAlign: "center"}}>
+         <CostsSummary costs={costs} />
+         <ListCostRows costs={costs} />
+         <div style={{ textAlign: "center" }}>
             <Link to="/detail">
                <button type="button" className="btn btn-primary btn-lg">
                   Ajouter

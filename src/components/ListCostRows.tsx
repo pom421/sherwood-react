@@ -12,20 +12,16 @@ const divStyle = {
    alignItems: "center",
    minHeight: 60,
    borderTop: "1px solid lightgray",
-   padding: "5px 0"
+   padding: "5px 0",
 }
 
 export const ListCostRows: SFC<MyProps> = ({ costs }) => {
    let rows
 
    if (costs) {
-      rows = costs.map((curr) => {
+      rows = costs.map(curr => {
          return (
-            <Link
-               to={`/detail/${curr.id}`}
-               key={curr.id}
-               style={{ textDecoration: "none", color: "inherit" }}
-            >
+            <Link to={`/detail/${curr.id}`} key={curr.id} style={{ textDecoration: "none", color: "inherit" }}>
                <div style={divStyle}>
                   <div style={{ flex: 1 }}>{curr.date}</div>
                   <div style={{ flex: 1, textAlign: "center" }}>

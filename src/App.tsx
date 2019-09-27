@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { SFC } from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
 import { DetailPage } from "pages/DetailPage"
@@ -8,7 +8,7 @@ import { IndexPage } from "pages/IndexPage"
 import "css/App.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 
-export const App = () => {
+export const App: SFC = () => {
    return (
       <div>
          <Router>

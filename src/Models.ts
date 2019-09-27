@@ -1,7 +1,6 @@
 export interface Cost {
-  id: number,
-  date: string,
-  amount: string,
-  reason: string,
+   id: number | undefined
+   date: string
+   amount: number
+   reason: string
 }
-
