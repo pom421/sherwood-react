@@ -9,6 +9,7 @@ const getAllCosts = (): Promise<Array<Cost>> => {
 }
 
 const getCost = (id: number): Promise<Cost> => {
+   console.log("dans getCost")
    return fetch(URL + "/" + id, {
       method: "GET",
    }).then(res => res.json())
@@ -31,9 +32,18 @@ const addCost = (cost: Cost): Promise<Cost> => {
 }
 
 const deleteCost = (id: number | undefined): Promise<number> => {
+   console.log("dans deleteCost")
    return fetch(`${URL}/${id}`, {
       method: "DELETE",
    }).then(res => res.json())
+}
+
+export default {
+   getAllCosts,
+   getCost,
+   updateCost,
+   addCost,
+   deleteCost,
 }
 
 export { getAllCosts, getCost, updateCost, addCost, deleteCost }
