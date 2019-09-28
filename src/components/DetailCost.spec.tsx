@@ -1,19 +1,28 @@
 import React from "react"
-import { render, fireEvent } from "@testing-library/react"
+import { render, fireEvent, cleanup, wait } from "@testing-library/react"
 
 import { DetailCost } from "components/DetailCost"
-import API from "API"
+import { deleteCost, getCost } from "API"
+import { BrowserRouter } from "react-router-dom"
 
 const { confirm } = window
 
+jest.mock("API")
+
 describe("<DetailCost>", () => {
    beforeEach(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;(deleteCost as jest.Mocked<any>).mockResolvedValue(2)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;(getCost as jest.Mocked<any>).mockResolvedValue({ id: 3, date: "", amount: 12, reason: "" })
       delete window.confirm
       window.confirm = jest.fn().mockImplementation(() => true)
    })
 
    afterEach(() => {
       window.confirm = confirm
+      cleanup()
+      jest.resetAllMocks()
    })
 
    it("should display Ajouter on new cost", () => {
@@ -23,37 +32,28 @@ describe("<DetailCost>", () => {
       expect(queryByText("Supprimer")).toBeNull()
    })
 
-   it("should display Modifier on existing cost", () => {
+   it("should display Modifier on existing cost", async () => {
       const { getByText, queryByText } = render(<DetailCost id={3} />)
-
-      const mockGetCost = jest.spyOn(API, "getCost").mockResolvedValue({ id: 3, date: "", amount: 12, reason: "" })
 
       getByText("Modifier")
       expect(queryByText("Supprimer")).not.toBeNull()
+
+      await wait()
    })
 
-   fit("should call deleteCost", () => {
-      const mock = jest.spyOn(API, "deleteCost").mockResolvedValue(2)
-      const mockGetCost = jest.spyOn(API, "getCost").mockResolvedValue({ id: 3, date: "", amount: 12, reason: "" })
-
-      const { getByText } = render(<DetailCost id={3} />)
+   it("should call deleteCost", async () => {
+      const { getByText } = render(
+         <BrowserRouter>
+            <DetailCost id={3} />
+         </BrowserRouter>,
+      )
 
       fireEvent.click(getByText("Supprimer"))
-
-      // API.deleteCost(3)
 
       expect(jest.isMockFunction(window.confirm)).toBe(true)
       expect(window.confirm).toHaveBeenCalled()
-      expect(mock).toHaveBeenCalledTimes(2)
-   })
+      expect(deleteCost).toHaveBeenCalledTimes(1)
 
-   it("should call another confirm", () => {
-      const mock = jest.spyOn(API, "deleteCost").mockResolvedValue(2)
-      const mockGetCost = jest.spyOn(API, "getCost").mockResolvedValue({ id: 3, date: "", amount: 12, reason: "" })
-      const { getByText } = render(<DetailCost id={3} />)
-
-      fireEvent.click(getByText("Supprimer"))
-
-      expect(window.confirm).toHaveBeenCalled()
+      await wait()
    })
 })

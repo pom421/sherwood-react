@@ -24,7 +24,6 @@ export const DetailCost: FC<MyProps> = ({ id }) => {
       if (id) {
          getCost(id)
             .then(json => {
-               console.log("json trouvé ", json)
                setState({
                   id: json.id,
                   date: json.date,

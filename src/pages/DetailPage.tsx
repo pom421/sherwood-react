@@ -6,6 +6,7 @@ import { RouteProps } from "react-router"
 import { Banner } from "components/Banner"
 import { DetailCost } from "components/DetailCost"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const DetailPage: SFC<any & RouteProps> = ({ match }) => {
    return (
       <div>
