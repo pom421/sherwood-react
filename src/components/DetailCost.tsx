@@ -21,49 +21,46 @@ export const DetailCost: FC<MyProps> = ({ id }) => {
    const [redirection, setRedirection] = useState(false)
 
    useEffect(() => {
+      async function fetchData(id: number): Promise<void> {
+         const cost = await getCost(id)
+
+         setState({
+            id: cost.id,
+            date: cost.date,
+            amount: cost.amount,
+            reason: cost.reason,
+         } as Cost)
+      }
       if (id) {
-         getCost(id)
-            .then(json => {
-               setState({
-                  id: json.id,
-                  date: json.date,
-                  amount: json.amount,
-                  reason: json.reason,
-               } as Cost)
-            })
-            .catch(error => console.error(`Erreur lors du chargement du cost avec l'id ${id} (${error})`))
+         fetchData(id)
       }
    }, [id])
 
-   const onSubmit = (): void => {
+   const onSubmit = async (): Promise<void> => {
       // TODO : contrôle
 
       if (state.id) {
-         updateCost(state)
-            .then(() => {
-               setRedirection(true)
-            })
-            .catch(error => console.error(`Erreur lors de la mise à jour du frais avec l'id ${state.id} (${error})`))
+         const res = await updateCost(state)
+         if (res) {
+            setRedirection(true)
+         }
       } else {
-         addCost(state)
-            .then(() => {
-               setRedirection(true)
-            })
-            .catch(error => console.error(`Erreur lors de l'ajout de la dépense (${error})`))
+         const cost = await addCost(state)
+
+         if (cost) {
+            setRedirection(true)
+         }
       }
    }
 
-   const onDelete = (): void => {
+   const onDelete = async (): Promise<void> => {
       const res = window.confirm("Voulez-vous vraiment supprimer ce frais?")
 
       if (res) {
-         deleteCost(state.id)
-            .then(() => {
-               setRedirection(true)
-            })
-            .catch(err => {
-               console.log(`Erreur lors de la suppression de l'item ${state.id} (${err})`)
-            })
+         const res = await deleteCost(state.id)
+         if (res) {
+            setRedirection(true)
+         }
       }
    }
 

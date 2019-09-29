@@ -11,12 +11,11 @@ export const IndexPage: React.FC = () => {
    const [costs, setCosts] = useState<Array<Cost>>([])
 
    useEffect(() => {
-      getAllCosts()
-         .then(response => {
-            console.log("Success:", response)
-            setCosts(response)
-         })
-         .catch(error => console.error("Error:", error))
+      async function fetchData(): Promise<void> {
+         const costs = await getAllCosts()
+         setCosts(costs)
+      }
+      fetchData()
    }, [])
 
    return (
