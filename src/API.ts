@@ -5,7 +5,9 @@ const URL = process.env.REACT_APP_API_URL as string
 const getAllCosts = (): Promise<Array<Cost>> => {
    return fetch(URL, {
       method: "GET",
-   }).then(res => res.json())
+   })
+      .then(res => res.json())
+      .then(costs => costs.sort((a: Cost, b: Cost) => new Date(b.date).getTime() - new Date(a.date).getTime()))
 }
 
 const getCost = (id: number): Promise<Cost> => {
