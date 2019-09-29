@@ -1,6 +1,6 @@
 import { Cost } from "Models"
 
-const URL = "http://localhost:3001/costs"
+const URL = process.env.REACT_APP_API_URL as string
 
 const getAllCosts = (): Promise<Array<Cost>> => {
    return fetch(URL, {
