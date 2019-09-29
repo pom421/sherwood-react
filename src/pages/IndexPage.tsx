@@ -19,7 +19,7 @@ export const IndexPage: React.FC = () => {
    }, [])
 
    return (
-      <div>
+      <div className="App">
          <Banner />
          <CostsSummary costs={costs} />
          <ListCostRows costs={costs} />

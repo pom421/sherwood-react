@@ -9,7 +9,7 @@ import { DetailCost } from "components/DetailCost"
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const DetailPage: SFC<any & RouteProps> = ({ match }) => {
    return (
-      <div>
+      <div className="App">
          <Banner />
          <Link to="/">
             <GoChevronLeft size="30" /> Retour
