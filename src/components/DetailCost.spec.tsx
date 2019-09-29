@@ -1,5 +1,5 @@
 import React from "react"
-import { render, fireEvent, cleanup, wait } from "@testing-library/react"
+import { render, fireEvent, wait } from "@testing-library/react"
 
 import { DetailCost } from "components/DetailCost"
 import { deleteCost, getCost } from "API"
@@ -21,7 +21,6 @@ describe("<DetailCost>", () => {
 
    afterEach(() => {
       window.confirm = confirm
-      cleanup()
       jest.resetAllMocks()
    })
 
